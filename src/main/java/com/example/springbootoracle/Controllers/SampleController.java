@@ -30,11 +30,35 @@ public class SampleController {
     }
 
     @Transactional
+    @GetMapping(value = "/allSamples/streamtenk")
+    public String getFirst10kWithStreaming() {
+        StopWatch stopwatch = new StopWatch();
+        stopwatch.start();
+        Stream<Sample> samples = sampleRepository.getFirst10000();
+        samples.forEach(sample -> System.out.println(sample.col1));
+        stopwatch.stop();
+        long timeTaken = stopwatch.getTotalTimeMillis();
+        return String.valueOf(timeTaken);
+    }
+
+    @Transactional
     @GetMapping(value = "/samples")
     public String getWithoutStreaming() {
         StopWatch stopwatch = new StopWatch();
         stopwatch.start();
         List<Sample> samples = sampleRepository.findAll();
+        samples.forEach(sample -> System.out.println(sample.col1));
+        stopwatch.stop();
+        long timeTaken = stopwatch.getTotalTimeMillis();
+        return String.valueOf(timeTaken);
+    }
+
+    @Transactional
+    @GetMapping(value = "/tenksamples")
+    public String getFirst10kWithoutStreaming() {
+        StopWatch stopwatch = new StopWatch();
+        stopwatch.start();
+        List<Sample> samples = sampleRepository.getFirst10000WithoutStreaming();
         samples.forEach(sample -> System.out.println(sample.col1));
         stopwatch.stop();
         long timeTaken = stopwatch.getTotalTimeMillis();
