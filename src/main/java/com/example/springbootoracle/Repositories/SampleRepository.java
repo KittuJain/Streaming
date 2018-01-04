@@ -28,7 +28,7 @@ public interface SampleRepository extends CrudRepository<Sample, Long> {
     @Query(value = "select * from sample FETCH NEXT 100000 ROWS ONLY ", nativeQuery = true)
     Stream<Sample> getFirst1L();
 
-
+    @QueryHints(value = @QueryHint(name = HINT_FETCH_SIZE, value = "100"))
     List<Sample> findAll();
 
     @Query(value = "select * from sample fetch next 10000 rows only", nativeQuery = true)

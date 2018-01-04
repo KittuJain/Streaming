@@ -87,7 +87,7 @@ public class SampleController {
     @GetMapping(value = "/excel")
     public String getExcel() {
 
-        Stream<Sample> sampleStream = sampleRepository.getFirst1L();
+        Stream<Sample> sampleStream = sampleRepository.getFirst10000();
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("samples");
 
